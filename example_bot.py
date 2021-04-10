@@ -4,7 +4,7 @@ import configparser
 
 config = configparser.ConfigParser()
 config.read('config.ini')
-app_token = config['DEFAULT']['APP_TOKEN']
+app_token = config['DEFAULT']['SLASH_APP_TOKEN']
 print(app_token)
 client = discord.Client()
 
@@ -21,8 +21,13 @@ async def on_message(message):
     if message.content.startswith("$hello"):
         await message.channel.send(message.author)
         await message.channel.send(client.user)
+        await message.channel.send("id :" + str(client.user.id))
         await message.channel.send("hello")
         await message.channel.send("hello2")
+    if message.content.startswith("$profile"):
+        profile = await message.author.profile()
+        print(profile)
+        
 
     await message.reply('Reply', mention_author=True)
 
