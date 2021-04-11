@@ -25,11 +25,24 @@ async def on_message(message):
         await message.channel.send("hello")
         await message.channel.send("hello2")
     if message.content.startswith("$profile"):
-        profile = await message.author.profile()
-        print(profile)
-        
+        data = connection_data()
+        import pprint
+        pprint.pprint(data)
 
-    await message.reply('Reply', mention_author=True)
+
+import requests
+#https://discordapp.com/oauth2/authorize?&client_id=830152161966030960&scope=connections
+def connection_data():
+    
+    #response1 = requests.get(url=f'https://discord.com/api/v8/users/@me/connections',headers={"Authorization": secret_token}).json()
+    response2 = requests.get(url=f'https://discord.com/api/v8/users/@me/connections',headers={"Authorization": "Bot "+app_token}).json()
+    response3 = requests.get(url=f'https://discord.com/api/v8/users/@me',headers={"Authorization": "Bot "+app_token}).json()
+    #response3 = requests.get(url=f'https://discord.com/api/v8/users/@me/connections',headers={"Authorization": public_token}).json()
+    
+    print("connections : ", response2)
+    print("me : ",response3 )
+    #response2,response3 
+
 
 client.run(app_token)
 
